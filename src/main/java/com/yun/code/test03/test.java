@@ -1,3 +1,4 @@
+/*
 package com.yun.code.test03;
 
 public class test {
@@ -8,3 +9,4 @@ public class test {
         System.out.println(myAtomicBoolean.toString());
     }
 }
+*/
