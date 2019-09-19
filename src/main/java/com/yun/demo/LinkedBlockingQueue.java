@@ -20,11 +20,16 @@ public class LinkedBlockingQueue<E> extends AbstractQueue<E>
 
     public static void main(String[] args) {
 
-        LinkedBlockingQueue<String> linkedBlockingQueue = new LinkedBlockingQueue<>(Integer.MAX_VALUE);
+        LinkedBlockingQueue<String> linkedBlockingQueue =
+                new LinkedBlockingQueue<>(Integer.MAX_VALUE);
 
         /** throw new Exception
-         * add实际用的 offer(e)
-         * offer和put用的都是private final ReentrantLock putLock = new ReentrantLock()来保证线程安全
+         * add实际用的 offer(e)方法
+         * offer和put用的都是
+         * private final ReentrantLock putLock = new ReentrantLock()来保证线程安全
+         * private final Condition notEmpty = takeLock.newCondition();保证阻塞线程的唤醒
+         *
+         * remove实际用的 poll()方法
          */
         linkedBlockingQueue.add("1");
         linkedBlockingQueue.remove();
@@ -69,7 +74,7 @@ public class LinkedBlockingQueue<E> extends AbstractQueue<E>
                 // last = last.next = node;
                 enqueue(node);
                 c = count.getAndIncrement();
-                // 判断队列是否有可用空间，如果有唤醒下一个线程进行添加操作
+                // 判断队列是否有可用空间，如果有唤醒下一个阻塞线程进行添加操作
                 if (c + 1 < capacity)
                     notFull.signal();
             }
@@ -83,7 +88,7 @@ public class LinkedBlockingQueue<E> extends AbstractQueue<E>
     }
 
     /**
-     * 003 enqueue
+     * 003 enqueue 尾插
      */
     private void enqueue(Node<E> node) {
         // assert putLock.isHeldByCurrentThread();
@@ -96,6 +101,54 @@ public class LinkedBlockingQueue<E> extends AbstractQueue<E>
         Node<E> next;
         Node(E x) { item = x; }
     }
+
+
+/**
+ * 004 poll
+ */
+public E poll() {
+    final AtomicInteger count = this.count;
+    if (count.get() == 0)
+        return null;
+    E x = null;
+    int c = -1;
+    // takeLock 用于移除数据时的lock
+    // 移除数据有多种方法故统一用takeLock，保证不会相互冲突
+    final ReentrantLock takeLock = this.takeLock;
+    //加锁
+    takeLock.lock();
+    try {
+        if (count.get() > 0) {
+            x = dequeue();
+            //cas减操作
+            c = count.getAndDecrement();
+            if (c > 1)
+                notEmpty.signal();
+        }
+    } finally {
+        takeLock.unlock();
+    }
+    if (c == capacity)
+        signalNotFull();
+    return x;
+}
+
+    /**
+     * 005 dequeue 头删
+     */
+    private E dequeue() {
+        // assert takeLock.isHeldByCurrentThread();
+        // assert head.item == null;
+        Node<E> h = head;
+        Node<E> first = h.next;
+        h.next = h; // help GC
+        head = first;
+        E x = first.item;
+        first.item = null;
+        return x;
+    }
+
+
 
     /**
      * Signals a waiting take. Called only from put/offer (which do not
@@ -152,22 +205,7 @@ public class LinkedBlockingQueue<E> extends AbstractQueue<E>
     /** Wait queue for waiting puts */
     private final Condition notFull = putLock.newCondition();
 
-    /**
-     * Removes a node from head of queue.
-     *
-     * @return the node
-     */
-    private E dequeue() {
-        // assert takeLock.isHeldByCurrentThread();
-        // assert head.item == null;
-        Node<E> h = head;
-        Node<E> first = h.next;
-        h.next = h; // help GC
-        head = first;
-        E x = first.item;
-        first.item = null;
-        return x;
-    }
+
 
     /**
      * Locks to prevent both puts and takes.
@@ -184,14 +222,6 @@ public class LinkedBlockingQueue<E> extends AbstractQueue<E>
         takeLock.unlock();
         putLock.unlock();
     }
-
-//     /**
-//      * Tells whether both locks are held by current thread.
-//      */
-//     boolean isFullyLocked() {
-//         return (putLock.isHeldByCurrentThread() &&
-//                 takeLock.isHeldByCurrentThread());
-//     }
 
 
 
@@ -272,7 +302,7 @@ public class LinkedBlockingQueue<E> extends AbstractQueue<E>
         putLock.lockInterruptibly();
         try {
             /*
-             * 队列已满等待被唤醒 唤醒动作一定是在
+             * 队列已满等待被唤醒 唤醒动作在
              */
             while (count.get() == capacity) {
                 notFull.await();
@@ -373,28 +403,6 @@ public class LinkedBlockingQueue<E> extends AbstractQueue<E>
         return x;
     }
 
-    public E poll() {
-        final AtomicInteger count = this.count;
-        if (count.get() == 0)
-            return null;
-        E x = null;
-        int c = -1;
-        final ReentrantLock takeLock = this.takeLock;
-        takeLock.lock();
-        try {
-            if (count.get() > 0) {
-                x = dequeue();
-                c = count.getAndDecrement();
-                if (c > 1)
-                    notEmpty.signal();
-            }
-        } finally {
-            takeLock.unlock();
-        }
-        if (c == capacity)
-            signalNotFull();
-        return x;
-    }
 
     public E peek() {
         if (count.get() == 0)
