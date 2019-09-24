@@ -1,4 +1,3 @@
-/*
 //
 // Source code recreated from a .class file by IntelliJ IDEA
 // (powered by Fernflower decompiler)
@@ -11,7 +10,6 @@ import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.AbstractQueuedSynchronizer;
 import java.util.concurrent.locks.AbstractQueuedSynchronizer.ConditionObject;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
@@ -34,7 +32,9 @@ public class ReentrantLock implements Lock, Serializable {
         NonfairSync() {
         }
 
+
         //004 钩子方法
+        @Override
         protected final boolean tryAcquire(int acquires) {
             return this.nonfairTryAcquire(acquires);
         }
@@ -253,4 +253,3 @@ public class ReentrantLock implements Lock, Serializable {
 
 
 }
-*/

@@ -39,13 +39,14 @@ public abstract class AbstractQueuedSynchronizer extends AbstractOwnableSynchron
     // 因为state在ReentrantLock的语境下等同于锁被线程重入的次数,
     // 这意味着只有当前锁未被任何线程持有时该动作才会返回成功。
     // 若获取锁成功,则将当前线程标记为持有锁的线程,然后整个加锁流程就结束了。
-    // 若获取锁失败,则执行acquire方法
     public final void acquire(int arg) {
+        // 若获取锁失败,则执行acquireQueued方法
         if (!this.tryAcquire(arg) && this.acquireQueued(this.addWaiter(AbstractQueuedSynchronizer.Node.EXCLUSIVE), arg)) {
             selfInterrupt();
         }
     }
 
+    //添加一个新节点
     private AbstractQueuedSynchronizer.Node addWaiter(AbstractQueuedSynchronizer.Node mode) {
         //创建一个新的节点
         AbstractQueuedSynchronizer.Node node = new AbstractQueuedSynchronizer.Node(mode);
@@ -193,6 +194,85 @@ public abstract class AbstractQueuedSynchronizer extends AbstractOwnableSynchron
     //钩子方法子类实现
     protected boolean tryAcquire(int arg) {
         throw new UnsupportedOperationException();
+    }
+
+
+    static final class Node {
+        //共享模式
+        static final AbstractQueuedSynchronizer.Node SHARED = new AbstractQueuedSynchronizer.Node();
+        //独占模式
+        static final AbstractQueuedSynchronizer.Node EXCLUSIVE = null;
+        static final int CANCELLED = 1;  //当前线程被取消
+        static final int SIGNAL = -1; //当前节点的后继节点要运行，也就是unpark
+        static final int CONDITION = -2; //当前节点在condition队列中等待
+        static final int PROPAGATE = -3; //后继的acquireShared能够得以执行，读写锁和信号量使用
+        //对于重入锁而言,主要有3个值。0:初始化状态；-1(SIGNAL):
+        // 当前结点表示的线程在释放锁后需要唤醒后续节点的线程;1(CANCELLED):在同步队列中等待的线程等待超时或者被中断,取消继续等待。
+        volatile int waitStatus;
+        //前驱节点
+        volatile AbstractQueuedSynchronizer.Node prev;
+        //后继节点
+        volatile AbstractQueuedSynchronizer.Node next;
+        //当前结点表示的线程,因为同步队列中的结点内部封装了之前竞争锁失败的线程,故而结点内部必然有一个对应线程实例的引用
+        volatile Thread thread;
+
+        //下一个等待者
+        AbstractQueuedSynchronizer.Node nextWaiter;
+
+        private static final VarHandle NEXT;
+        private static final VarHandle PREV;
+        private static final VarHandle THREAD;
+        private static final VarHandle WAITSTATUS;
+
+        final boolean isShared() {
+            return this.nextWaiter == SHARED;
+        }
+
+        final AbstractQueuedSynchronizer.Node predecessor() {
+            AbstractQueuedSynchronizer.Node p = this.prev;
+            if (p == null) {
+                throw new NullPointerException();
+            } else {
+                return p;
+            }
+        }
+
+        Node() {
+        }
+
+        Node(AbstractQueuedSynchronizer.Node nextWaiter) {
+            this.nextWaiter = nextWaiter;
+            THREAD.set(this, Thread.currentThread());
+        }
+
+        Node(int waitStatus) {
+            WAITSTATUS.set(this, waitStatus);
+            THREAD.set(this, Thread.currentThread());
+        }
+
+        final boolean compareAndSetWaitStatus(int expect, int update) {
+            return WAITSTATUS.compareAndSet(this, expect, update);
+        }
+
+        final boolean compareAndSetNext(AbstractQueuedSynchronizer.Node expect, AbstractQueuedSynchronizer.Node update) {
+            return NEXT.compareAndSet(this, expect, update);
+        }
+
+        final void setPrevRelaxed(AbstractQueuedSynchronizer.Node p) {
+            PREV.set(this, p);
+        }
+
+        static {
+            try {
+                Lookup l = MethodHandles.lookup();
+                NEXT = l.findVarHandle(AbstractQueuedSynchronizer.Node.class, "next", AbstractQueuedSynchronizer.Node.class);
+                PREV = l.findVarHandle(AbstractQueuedSynchronizer.Node.class, "prev", AbstractQueuedSynchronizer.Node.class);
+                THREAD = l.findVarHandle(AbstractQueuedSynchronizer.Node.class, "thread", Thread.class);
+                WAITSTATUS = l.findVarHandle(AbstractQueuedSynchronizer.Node.class, "waitStatus", Integer.TYPE);
+            } catch (ReflectiveOperationException var1) {
+                throw new ExceptionInInitializerError(var1);
+            }
+        }
     }
 
     protected AbstractQueuedSynchronizer() {
@@ -766,6 +846,10 @@ public abstract class AbstractQueuedSynchronizer extends AbstractOwnableSynchron
         Class var2 = LockSupport.class;
     }
 
+    /**
+     * ConditionObject主要是为并发编程中的同步提供了等待通知的实现方式，
+     * 可以在不满足某个条件的时候挂起线程等待。直到满足某个条件的时候在唤醒线程。
+     */
     public class ConditionObject implements Condition, Serializable {
         private static final long serialVersionUID = 1173984872572414699L;
         private transient AbstractQueuedSynchronizer.Node firstWaiter;
@@ -1108,77 +1192,5 @@ public abstract class AbstractQueuedSynchronizer extends AbstractOwnableSynchron
         }
     }
 
-    static final class Node {
-        static final AbstractQueuedSynchronizer.Node SHARED = new AbstractQueuedSynchronizer.Node();
-        static final AbstractQueuedSynchronizer.Node EXCLUSIVE = null;
-        static final int CANCELLED = 1;
-        static final int SIGNAL = -1;
-        static final int CONDITION = -2;
-        static final int PROPAGATE = -3;
-        //对于重入锁而言,主要有3个值。0:初始化状态；-1(SIGNAL):
-        // 当前结点表示的线程在释放锁后需要唤醒后续节点的线程;1(CANCELLED):在同步队列中等待的线程等待超时或者被中断,取消继续等待。
-        volatile int waitStatus;
-        //指向前一个结点的指针
-        volatile AbstractQueuedSynchronizer.Node prev;
-        //指向后一个结点的指针
-        volatile AbstractQueuedSynchronizer.Node next;
-        //当前结点表示的线程,因为同步队列中的结点内部封装了之前竞争锁失败的线程,故而结点内部必然有一个对应线程实例的引用
-        volatile Thread thread;
 
-        AbstractQueuedSynchronizer.Node nextWaiter;
-        private static final VarHandle NEXT;
-        private static final VarHandle PREV;
-        private static final VarHandle THREAD;
-        private static final VarHandle WAITSTATUS;
-
-        final boolean isShared() {
-            return this.nextWaiter == SHARED;
-        }
-
-        final AbstractQueuedSynchronizer.Node predecessor() {
-            AbstractQueuedSynchronizer.Node p = this.prev;
-            if (p == null) {
-                throw new NullPointerException();
-            } else {
-                return p;
-            }
-        }
-
-        Node() {
-        }
-
-        Node(AbstractQueuedSynchronizer.Node nextWaiter) {
-            this.nextWaiter = nextWaiter;
-            THREAD.set(this, Thread.currentThread());
-        }
-
-        Node(int waitStatus) {
-            WAITSTATUS.set(this, waitStatus);
-            THREAD.set(this, Thread.currentThread());
-        }
-
-        final boolean compareAndSetWaitStatus(int expect, int update) {
-            return WAITSTATUS.compareAndSet(this, expect, update);
-        }
-
-        final boolean compareAndSetNext(AbstractQueuedSynchronizer.Node expect, AbstractQueuedSynchronizer.Node update) {
-            return NEXT.compareAndSet(this, expect, update);
-        }
-
-        final void setPrevRelaxed(AbstractQueuedSynchronizer.Node p) {
-            PREV.set(this, p);
-        }
-
-        static {
-            try {
-                Lookup l = MethodHandles.lookup();
-                NEXT = l.findVarHandle(AbstractQueuedSynchronizer.Node.class, "next", AbstractQueuedSynchronizer.Node.class);
-                PREV = l.findVarHandle(AbstractQueuedSynchronizer.Node.class, "prev", AbstractQueuedSynchronizer.Node.class);
-                THREAD = l.findVarHandle(AbstractQueuedSynchronizer.Node.class, "thread", Thread.class);
-                WAITSTATUS = l.findVarHandle(AbstractQueuedSynchronizer.Node.class, "waitStatus", Integer.TYPE);
-            } catch (ReflectiveOperationException var1) {
-                throw new ExceptionInInitializerError(var1);
-            }
-        }
-    }
 }
