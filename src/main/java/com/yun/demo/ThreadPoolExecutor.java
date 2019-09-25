@@ -1,3 +1,4 @@
+/*
 //
 // Source code recreated from a .class file by IntelliJ IDEA
 // (powered by Fernflower decompiler)
@@ -20,7 +21,8 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 
     //001 test
     public static void main(String[] args) {
-        /**
+        */
+/**
          * 当任务到来时corePool才被初始化
          *
          * 核心线程池大小
@@ -37,23 +39,33 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
          *  所以在IO密集型任务中使用多线程可以大大的加速程序运行。故需要·多配置线程数：
          *  参考公式：CPU核数/（1-阻塞系数 ） 阻塞系数在（0.8-0.9）之间
          *  比如8核CPU：8/（1-0.9） = 80个线程数
-         */
+         *//*
+
         int corePoolSize = 2;
 
-        /**最大线程池大小*/
+        */
+/**最大线程池大小*//*
+
         int maximumPoolSize = 10;
 
-        /**线程最大空闲时间*/
+        */
+/**线程最大空闲时间*//*
+
         long keepAliveTime = 60;
 
-        /**时间单位*/
+        */
+/**时间单位*//*
+
         java.util.concurrent.TimeUnit unit = java.util.concurrent.TimeUnit.SECONDS;
 
-        /**线程等待队列*/
+        */
+/**线程等待队列*//*
+
 
         BlockingQueue<Runnable> workQueue = new LinkedBlockingQueue<>(100);
 
-        /**
+        */
+/**
          * 线程创建工厂
          * ThreadFactory threadFactory = Executors.defaultThreadFactory();
          *  return new Executors.DefaultThreadFactory();返回用于创建新线程的默认线程工厂
@@ -61,10 +73,12 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
          *  返回用于创建新线程的线程工厂，这些新线程与当前线程具有相同的权限
          *  ThreadFactory threadFactory = ThreadFactory.privilegedThreadFactory();
          *  return new Executors.PrivilegedThreadFactory(); 主要添加了访问权限校验
-         */
+         *//*
+
         ThreadFactory threadFactory = Executors.defaultThreadFactory();
 
-        /**
+        */
+/**
          * 拒绝策略 核心代码void rejectedExecution(Runnable var1, ThreadPoolExecutor var2);
          *
          * 丢弃任务并抛出RejectedExecutionException异常。
@@ -79,7 +93,8 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
          * 由调用线程处理该任务
          * private static final RejectedExecutionHandler handler =
          *      new ThreadPoolExecutor.CallerRunsPolicy();
-         */
+         *//*
+
         RejectedExecutionHandler handler = new ThreadPoolExecutor.CallerRunsPolicy();
         ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(
                 corePoolSize, maximumPoolSize, keepAliveTime,
@@ -200,21 +215,29 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
     }
 
     //0031 Worker
-    /**
+    */
+/**
      * Worker 实现了简单的 非重入互斥锁，互斥容易理解，非重入是为了避免线程池的一些控制方法获得重入锁，
      * 比如setCorePoolSize操作。注意 Worker 实现锁的目的与传统锁的意义不太一样。
      * 其主要是为了控制线程是否可interrupt，以及其他的监控，如线程是否 active（正在执行任务）。
      * 线程池里线程是否处于运行状态与普通线程不一样，
      * 普通线程可以调用 Thread.currentThread().isAlive() 方法来判断，
      * 而线程池，在run方法中可能在等待获取新任务，这期间线程线程是 alive 但是却不是 active。
-     */
+     *//*
+
     private final class Worker extends AbstractQueuedSynchronizer implements Runnable {
         private static final long serialVersionUID = 6138294804551838833L;
-        /** 每个worker有自己的内部线程，ThreadFactory创建失败时是null */
+        */
+/** 每个worker有自己的内部线程，ThreadFactory创建失败时是null *//*
+
         final Thread thread;
-        /** 初始化任务 */
+        */
+/** 初始化任务 *//*
+
         Runnable firstTask;
-        /** 每个worker的完成任务数 */
+        */
+/** 每个worker的完成任务数 *//*
+
         volatile long completedTasks;
         Worker(Runnable firstTask) {
             // 禁止线程在启动前被打断
@@ -695,7 +718,9 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
         }
     }
 
-    /** @deprecated */
+    */
+/** @deprecated *//*
+
 //    @Deprecated(
 //        since = "9"
 //    )
@@ -1040,3 +1065,4 @@ public class ThreadPoolExecutor extends AbstractExecutorService {
 
 
 }
+*/
