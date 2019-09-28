@@ -11,7 +11,7 @@ import java.util.Arrays;
  * 4 3 9 2 8 7 0
  * 输出: 3
  */
-public class S41 {
+public class S41缺失的第一个正数 {
     public static void main(String[] args) {
 
     }
