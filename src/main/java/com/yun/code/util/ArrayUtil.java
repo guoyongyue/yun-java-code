@@ -2,6 +2,7 @@ package com.yun.code.util;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ArrayUtil {
 
@@ -109,6 +110,25 @@ public class ArrayUtil {
     public static void print(String[] matrix) {
         for (int i = 0; i < matrix.length; i++) {
             System.out.print(matrix[i]+" ");
+        }
+    }
+
+    public static void print(int[][] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            print(matrix[i]);
+            System.out.println();
+        }
+    }
+    public static void print(int[] matrix) {
+        for (int i = 0; i < matrix.length; i++) {
+            System.out.print(matrix[i]+" ");
+        }
+    }
+
+
+    public static void print(List<String> list) {
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
         }
     }
 
