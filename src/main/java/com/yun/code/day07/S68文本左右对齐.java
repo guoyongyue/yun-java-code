@@ -28,13 +28,21 @@ public class S68文本左右对齐 {
         String temp ="";
         List<String> list = new ArrayList<>();
         for (int i = 0; i < words.length; i++) {
-            int newStrLength = temp.length();
+            int newStrLength = temp.length()+words[i].length()+1;
             if(newStrLength>maxWidth){
                 list.add(temp);
                 temp=words[i];
             }else {
-                temp=temp+" "+words[i];
+                if(temp==null || temp.length()==0){
+                    temp=words[i];
+                }else {
+                    temp=temp+" "+words[i];
+                }
+
             }
+        }
+        if(temp!=null && temp.length()>0){
+            list.add(temp);
         }
         return list;
     }

@@ -3,6 +3,7 @@ package com.yun.code.util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ArrayUtil {
 
@@ -127,9 +128,11 @@ public class ArrayUtil {
 
 
     public static void print(List<String> list) {
-        for (int i = 0; i < list.size(); i++) {
-            System.out.println(list.get(i));
-        }
+        list.forEach(key -> System.out.println(key));
+    }
+
+    public static void print(Map<String,String> map) {
+        map.forEach((key,value) -> System.out.printf("key : %s; value : %s; thread: %s\n",key, value, Thread.currentThread().getName()));
     }
 
 
