@@ -18,11 +18,15 @@ import java.util.List;
 public class S68文本左右对齐 {
     public static void main(String[] args) {
 
-        String[]  words = {"This", "is", "an", "example", "of", "text", "justification."};
+//        int[] ints = ArrayUtil.initArray("1,2,3,4,5");
+        int[][] ints = ArrayUtil.initArray("1,2,3,4,6","1,2,3,4,5");
+        ArrayUtil.print(ints);
+
+       /* String[]  words = {"This", "is", "an", "example", "of", "text", "justification."};
         int maxWidth = 16;
 
         List<String> list = fullJustify(words, maxWidth);
-        ArrayUtil.print(list);
+        ArrayUtil.print(list);*/
     }
     public static List<String> fullJustify(String[] words, int maxWidth) {
         String temp ="";
