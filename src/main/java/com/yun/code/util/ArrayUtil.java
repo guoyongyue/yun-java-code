@@ -7,7 +7,9 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 public class ArrayUtil {
-
+    public static void main(String[] args) {
+        System.out.println(">>>>>>>>>>> project begin");;
+    }
 
     //掩码姓名
     public static String maskName(String name) {
