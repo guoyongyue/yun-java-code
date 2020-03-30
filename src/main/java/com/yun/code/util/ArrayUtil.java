@@ -127,6 +127,7 @@ public class ArrayUtil {
         for (int i = 0; i < matrix.length; i++) {
             System.out.print(matrix[i] + " ");
         }
+        System.out.println();
     }
 
 
@@ -140,14 +141,12 @@ public class ArrayUtil {
 
 
     public static int[] initArray(String array) {
-        int[] split = new int[array.length() / 2 + 1];
-        IntStream.range(0, array.length()).forEach(i -> {
-            if (array.charAt(i) != ',') {
-                Integer integer = Integer.valueOf(array.substring(i, i + 1));
-                split[i / 2] = integer;
-            }
-        });
-        return split;
+        String[] splitStr = array.split(",");
+        int[] splitInt= new int[splitStr.length];
+        for (int i = 0; i < splitStr.length; i++) {
+            splitInt[i]=Integer.valueOf(splitStr[i]);
+        }
+        return splitInt;
     }
 
     public static int[][] initArray(String... arrays) {
