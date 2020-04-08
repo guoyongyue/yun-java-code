@@ -34,11 +34,8 @@ public class S77组合 {
         }
 
         for (int i = first; i < n + 1; ++i) {
-            // add i into the current combination
             curr.add(i);
-            // use next integers to complete the combination
             backtrack(i + 1, curr);
-            // backtrack
             curr.removeLast();
         }
     }

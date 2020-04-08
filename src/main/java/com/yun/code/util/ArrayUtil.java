@@ -2,6 +2,7 @@ package com.yun.code.util;
 
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.IntStream;
@@ -131,9 +132,14 @@ public class ArrayUtil {
     }
 
 
-    public static void print(List<String> list) {
+    public static void print(List<Object> list) {
         list.forEach(key -> System.out.println(key));
     }
+
+    public static void print(LinkedList<Integer> list) {
+        list.forEach(key -> System.out.println(key));
+    }
+
 
     public static void print(Map<String, String> map) {
         map.forEach((key, value) -> System.out.printf("key : %s; value : %s; thread: %s\n", key, value, Thread.currentThread().getName()));
