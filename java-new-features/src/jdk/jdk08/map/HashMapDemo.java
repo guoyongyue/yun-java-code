@@ -60,5 +60,6 @@ public class HashMapDemo {
     private static void merge(HashMap hashMap){
         hashMap.merge("c3", "p0", (value, newValue) -> "new "+ value);
         System.out.println("c3:"+hashMap.get("c3"));
+
     }
 }
