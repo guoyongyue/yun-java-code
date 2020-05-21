@@ -15,7 +15,7 @@ public abstract class JDBCTemplate {
         this.dataSource = dataSource;
     }
 
-    public List<?> executeQuery(String sql, RowMapper<?> rowMapper, Object[] values) {
+    public List<?> executeQuery(String sql, RowMapper<Object> rowMapper, Object[] values) {
         try {
             //1、获取连接
             Connection connection = this.getConnection();
@@ -51,7 +51,7 @@ public abstract class JDBCTemplate {
     }
 
 
-    protected List<?> parseResultSet(ResultSet rs,RowMapper<?> rowMapper) throws Exception {
+    protected List<?> parseResultSet(ResultSet rs, RowMapper<?> rowMapper) throws Exception {
         List<Object> result = new ArrayList<Object>();
         int rowNum = 1;
         while (rs.next()){

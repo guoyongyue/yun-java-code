@@ -12,7 +12,7 @@ public class S01两数之和 {
     public static void main(String[] args) {
         int a[] ={1,2,3,4,5,6,8};
         int b[]=twoSum(a,10);
-        System.out.println(a[b[0]]+" "+a[b[1]]);
+        System.out.println(b[0]+" "+b[1]);
     }
     public static int[] twoSum(int[] nums, int target) {
         Map<Integer, Integer> map = new HashMap<Integer, Integer>();
@@ -21,7 +21,7 @@ public class S01两数之和 {
             //map的数据结构
             int complement = target - nums[i];
             if (map.containsKey(complement)) {
-                return new int[] { map.get(complement), i };
+                return new int[] { complement, nums[i] };
             }
             map.put(nums[i], i);
         }
