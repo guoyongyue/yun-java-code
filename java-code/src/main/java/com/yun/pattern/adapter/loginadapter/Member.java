@@ -2,7 +2,7 @@ package com.yun.pattern.adapter.loginadapter;
 
 /**
  * @class name:  Member <br/>
- * @description: <br/>
+ * @description: 适配器模式<br/>
  * @date: 2020/5/21 23:24<br/>
  * @author: yun<br />
  */

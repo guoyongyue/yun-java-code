@@ -11,6 +11,12 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 
+/**
+ * @class name: DispatcherServlet <br/>
+ * @description: 委派模式 <br/>
+ * @date: 2020/5/23 19:36<br/>
+ * @author: yun<br />
+ */
 public class DispatcherServlet extends HttpServlet {
     private static ArrayList<Handler> handlerMapping = new ArrayList<Handler>();
 
