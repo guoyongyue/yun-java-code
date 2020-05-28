@@ -1,8 +1,15 @@
 package com.yun.code;
-
-public class ListNode implements Comparable<ListNode>{
+/**
+ * @author: yun<\br>
+ * @description: <\br>
+ * @date:  2020/5/26 9:21<\br>
+*/
+public class ListNode implements Comparable<ListNode> {
     public int val;
     public ListNode next;
+
+    public ListNode() {
+    }
 
     public ListNode(int x) {
         val = x;
