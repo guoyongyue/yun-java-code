@@ -112,7 +112,7 @@ public class ArrayUtil {
     }
 
 
-    public static void print(List<Object> list) {
+    public static void print(List<Integer> list) {
         list.forEach(key -> System.out.println(key));
     }
 
