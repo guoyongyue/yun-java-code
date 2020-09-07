@@ -1,4 +1,4 @@
-package jdk.jdk08.streams.intstream;
+package com.yun.jdk.jdk08.streams.intstream;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
