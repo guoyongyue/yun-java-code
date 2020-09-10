@@ -1,6 +1,6 @@
 package com.yun.code.day07;
 
-import com.yun.code.util.ArrayUtil;
+import com.yun.util.ArrayUtil;
 
 import java.util.ArrayList;
 import java.util.List;

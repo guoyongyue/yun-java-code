@@ -1,4 +1,4 @@
-package com.yun.code.util;
+package com.yun.util;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

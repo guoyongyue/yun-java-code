@@ -1,8 +1,7 @@
 package com.yun.code.day08;
 
-import com.yun.code.util.ArrayUtil;
+import com.yun.util.ArrayUtil;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

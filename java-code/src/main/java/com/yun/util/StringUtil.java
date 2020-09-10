@@ -1,7 +1,11 @@
-package com.yun.code.util;
+package com.yun.util;
 
+/**
+ * @author: yun<\br>
+ * @description: <\br>
+ * @date:  2020/9/10 9:30<\br>
+*/
 public class StringUtil {
-    //掩码姓名
     public static String maskName(String name) {
         if (name == null || name.length() < 2) {
             return null;
@@ -14,7 +18,7 @@ public class StringUtil {
         return name;
     }
 
-    //掩码手机号
+
     public static String maskPhone(String tel) {
         if (tel == null || tel.length() < 11) {
             return null;
@@ -22,4 +26,21 @@ public class StringUtil {
         tel = tel.replaceAll("(\\d{3})\\d{4}(\\d{4})", "$1****$2");
         return tel;
     }
+
+    public static void printlnBegin(String name){
+        System.out.println("------>"+name+" begin");
+    }
+
+    public static void printlnRet(String value){
+        System.out.println("------>"+value+" ret");
+    }
+
+    public static void printlnRet(int value){
+        System.out.println("------>"+value);
+    }
+
+    public static void printlnEnd(String name){
+        System.out.println("------>"+name+" end");
+    }
+
 }

@@ -1,10 +1,7 @@
 package com.yun.code.day08;
 
-import com.yun.code.util.ArrayUtil;
-
 import java.util.LinkedList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 /**
  * 给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合。
