@@ -47,20 +47,6 @@ public class IsEmptyUtil {
         return true;
     }
 
-    /*public boolean isEmpty4Object(Object... objArr){
-        if(objArr==null || objArr.length==0){
-            return false;
-        }else {
-            for (int i = 0; i < objArr.length; i++) {
-                if(objArr[i] == null){
-                    return false;
-                }
-            }
-        }
-        return true;
-    }*/
-
-
     public static boolean isEmpty4Object(Object... objectArr) {
         if (objectArr == null || objectArr.length == 0) {
             return false;
