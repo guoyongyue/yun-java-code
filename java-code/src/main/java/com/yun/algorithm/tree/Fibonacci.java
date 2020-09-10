@@ -21,6 +21,11 @@ public class Fibonacci {
         StringUtil.printlnRet(fibonacci.fib2(5));
         StringUtil.printlnEnd("迭代打印斐波那契数列 剪枝法");
 
+
+
+        StringUtil.printlnBegin("迭代打印斐波那契数列 ⾃底向上");
+        StringUtil.printlnRet(fibonacci.fib3(5));
+        StringUtil.printlnEnd("迭代打印斐波那契数列 ⾃底向上");
     }
 
     private int fib(int n){
@@ -49,6 +54,21 @@ public class Fibonacci {
         }else {
             return memo.get(n-1);
         }
+    }
+
+
+    private int fib3(int n){
+        if(n==1 || n==2){
+            return 1;
+        }
+
+        Vector<Integer> memo = new Vector<>(16);
+        memo.add(1);
+        memo.add(1);
+        for (int i = 3; i <= n; i++) {
+            memo.add(memo.get(i-2)+memo.get(i-3));
+        }
+        return memo.get(n-1);
     }
 
 

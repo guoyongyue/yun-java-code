@@ -28,6 +28,7 @@ public class StringUtil {
     }
 
     public static void printlnBegin(String name){
+        System.out.println();
         System.out.println("------>"+name+" begin");
     }
 
@@ -41,6 +42,7 @@ public class StringUtil {
 
     public static void printlnEnd(String name){
         System.out.println("------>"+name+" end");
+        System.out.println();
     }
 
 }
