@@ -1,5 +1,6 @@
 package com.yun.code.day13;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,15 +22,59 @@ import java.util.List;
  *
  */
 public class S120三角形最小路径和 {
-
+    public static void main(String[] args) {
+        //[[2],[3,4],[6,5,7],[4,1,8,3]]
+        S120三角形最小路径和 s120三角形最小路径和 = new S120三角形最小路径和();
+        List<List<Integer>> lists= new ArrayList<List<Integer>>();
+        List<Integer> list1 = new ArrayList<Integer>();
+        list1.add(2);
+        List<Integer> list2 = new ArrayList<Integer>();
+        list2.add(3);
+        list2.add(4);
+        List<Integer> list3 = new ArrayList<Integer>();
+        list3.add(6);
+        list3.add(5);
+        list3.add(7);
+        List<Integer> list4 = new ArrayList<Integer>();
+        list4.add(4);
+        list4.add(1);
+        list4.add(8);
+        list4.add(3);
+        lists.add(list1);
+        lists.add(list2);
+        lists.add(list3);
+        lists.add(list4);
+        int i = s120三角形最小路径和.minimumTotal(lists);
+        System.out.println(i);
+    }
     public int minimumTotal(List<List<Integer>> triangle) {
-        for (List<Integer> list:triangle) {
-            for (Integer value:list){
-                if(list.size()==1){
+        if(triangle.size()==1){
+            return triangle.get(0).get(0);
+        }
+        int minValue=0;
+        for (int i = 0; i < triangle.size(); i++) {
+            for (int j = 0; j < triangle.get(i).size(); j++) {
+                if(i==0){
                     continue;
+                }else {
+                    int value=0;
+                    if(j==0){
+                        value=triangle.get(i-1).get(0)+triangle.get(i).get(j);
+                    }else if(j==triangle.get(i).size()-1){
+                        value=triangle.get(i-1).get(j-1)+triangle.get(i).get(j);
+                    }else {
+                        value=Math.min(triangle.get(i-1).get(j-1),triangle.get(i-1).get(j))+triangle.get(i).get(j);
+                    }
+                    if((i==triangle.size()-1) && j==0){
+                        minValue=value;
+                    }
+                    if(i==triangle.size()-1){
+                        minValue=Math.min(minValue,value);
+                    }
+                    triangle.get(i).set(j,value);
                 }
-
             }
         }
+        return minValue;
     }
 }
