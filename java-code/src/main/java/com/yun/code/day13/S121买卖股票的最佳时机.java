@@ -1,5 +1,7 @@
 package com.yun.code.day13;
 
+import com.yun.util.ArrayUtil;
+
 /**
  * 给定一个数组，它的第 i 个元素是一支给定股票第 i 天的价格。
  *
@@ -19,9 +21,28 @@ package com.yun.code.day13;
  */
 public class S121买卖股票的最佳时机 {
     public static void main(String[] args) {
-
+        S121买卖股票的最佳时机 s121买卖股票的最佳时机 = new S121买卖股票的最佳时机();
+        int[] ints = ArrayUtil.initArray("3,7,1,5,3,6,4");
+        int i = s121买卖股票的最佳时机.maxProfit(ints);
+        System.out.println(i);
     }
     public int maxProfit(int[] prices) {
-        return 0;
+        if(prices == null || prices.length==0){
+            return 0;
+        }
+        int buyValue = prices[0];
+        int sellValue = 0;
+        int monkey=0;
+        for (int i = 1; i < prices.length; i++) {
+            if(prices[i]<buyValue){
+                buyValue=prices[i];
+                sellValue=0;
+            }
+            sellValue=Math.max(sellValue,prices[i]);
+            if(sellValue-buyValue>0){
+                monkey=Math.max(sellValue-buyValue,monkey);
+            }
+        }
+        return monkey;
     }
 }
