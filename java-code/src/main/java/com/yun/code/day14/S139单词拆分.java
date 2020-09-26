@@ -45,29 +45,4 @@ public class S139单词拆分 {
         return dp[s.length()];
     }
 
-    /*public boolean wordBreak(String s, List<String> wordDict) {
-        if(s==null || s.length()==0){
-            return false;
-        }
-
-        if(wordDict==null || wordDict.size()==0){
-            return false;
-        }
-        Set<String> set = new HashSet<>(wordDict);
-        int beginIndex=0;
-        for (int i = 1; i <= s.length(); i++) {
-            boolean contains = set.contains(s.substring(beginIndex, i));
-            if(contains==true){
-                beginIndex=i;
-            }
-        }
-        if(beginIndex==s.length()){
-            return true;
-        }else {
-            return false;
-        }
-    }*/
-
-
-
 }
