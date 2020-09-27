@@ -1,5 +1,7 @@
 package com.yun.code.day20;
 
+import com.yun.util.ArrayUtil;
+
 /**
  *你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
  *
@@ -8,10 +10,26 @@ package com.yun.code.day20;
  */
 public class S198打家劫舍 {
     public static void main(String[] args) {
-
+        int[] ints = ArrayUtil.initArray("1,2,3,4");
+        S198打家劫舍 s198打家劫舍 = new S198打家劫舍();
+        int rob = s198打家劫舍.rob(ints);
+        System.out.println(rob);
     }
     public int rob(int[] nums) {
-        return 0;
+        if(nums==null || nums.length==0){
+            return 0;
+        }
+        if(nums.length==1){
+            return nums[0];
+        }
+        if(nums.length==2){
+            return Math.max(nums[0],nums[1]);
+        }
+        nums[2]=nums[0]+nums[2];
+        for (int i = 3; i < nums.length; i++) {
+            nums[i]= Math.max(nums[i-2],nums[i-3])+nums[i];
+        }
+        return Math.max(nums[nums.length-1],nums[nums.length-2]);
     }
 
 }
