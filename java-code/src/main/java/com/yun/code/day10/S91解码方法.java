@@ -13,17 +13,15 @@ public class S91解码方法 {
     public static void main(String[] args) {
         String s = "12321";
         S91解码方法 s91解码方法 =new S91解码方法();
-        System.out.println(s91解码方法.numDecoding("1"));
         System.out.println(s91解码方法.numDecoding("12"));
-        System.out.println(s91解码方法.numDecoding("28"));
-        System.out.println(s91解码方法.numDecoding("299"));
-        System.out.println(s91解码方法.numDecoding("1234"));
-        // 1 2 3 4
-        // 12 3  4
-        //
+        System.out.println(s91解码方法.numDecoding("226"));
+        // 1 2 3 4 5
+        // 12 3  4 5
+        // 1 23 4 5
     }
 
     public int numDecoding(String s) {
+        int[] temp = new int[s.length()];
         if (s == null || s.length() == 0) {
             return 0;
         }
@@ -31,20 +29,20 @@ public class S91解码方法 {
         if (s.length() == 1) {
             return 1;
         }
-        int[] temp = new int[s.length()];
+
         temp[0] = 1;
         String substring = s.substring(0, 2);
         Integer integer = Integer.valueOf(substring);
         temp[1] = ((integer > 9 && integer < 27) ? 2 : 1);
-        test(temp,s);
+        initArr(temp,s);
 
         return temp[temp.length-1];
 
     }
 
-    private void test(int[] ints, String s) {
+    public void initArr(int[] ints, String s) {
         for (int i = 2; i < s.length(); i++) {
-            String substring = s.substring(i - 2, i);
+            String substring = s.substring(i - 1, i+1);
             Integer integer = Integer.valueOf(substring);
             ints[i] = ((integer > 9 && integer < 27) ? ints[i - 1] + 1 : ints[i - 1]);
         }
