@@ -21,25 +21,20 @@ public class HashMapDemo {
 
         System.out.println("merge begin========>");
         HashMapDemo.merge(hashMap);
-
     }
 
     private static void print(HashMap<String,String> hashMap){
 
         hashMap.forEach((key,value)-> System.out.println(key+":"+value));
-
-
         for(Map.Entry<String, String> entry : hashMap.entrySet()){
             String mapKey = entry.getKey();
             String mapValue = entry.getValue();
             //System.out.println(mapKey+":"+mapValue);
         }
 
-
         for(String value : hashMap.values()){
             //System.out.println(value);
         }
-
 
         Iterator<Map.Entry<String, String>> entries = hashMap.entrySet().iterator();
         while(entries.hasNext()){
@@ -53,8 +48,6 @@ public class HashMapDemo {
             String value = hashMap.get(key);
             //System.out.println(key+":"+value);
         }
-
-
     }
 
     private static void merge(HashMap hashMap){
