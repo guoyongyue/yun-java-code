@@ -1,4 +1,4 @@
-package com.yun.demo;
+package com.yun.demo.thread.pool;
 
 
 import java.util.concurrent.*;
@@ -19,7 +19,6 @@ public class ThreadPoolExecutorDemo {
     private static BlockingQueue<Runnable> WORK_QUEUE = new LinkedBlockingQueue<>();
     private static ThreadFactory THREAD_FACTORY = new ThreadFactory() {
         private final AtomicInteger integer = new AtomicInteger();
-
         @Override
         public Thread newThread(Runnable r) {
             return new Thread(r, "ThreadPool thread " + integer.getAndIncrement());
@@ -35,7 +34,6 @@ public class ThreadPoolExecutorDemo {
             Runnable thread = new MyThread();
             THREAD_POOL_EXECUTOR.execute(thread);
         }
-        ;
     }
 }
 
