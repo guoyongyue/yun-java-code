@@ -1,3 +1,4 @@
+/*
 package com.yun.pattern.proxy.cglibproxy;
 
 import net.sf.cglib.core.DebuggingClassWriter;
@@ -27,3 +28,4 @@ public class CGlibBuyHouseProxyTest {
         }
 }
 }
+*/

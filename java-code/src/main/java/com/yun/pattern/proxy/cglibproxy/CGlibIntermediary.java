@@ -1,3 +1,4 @@
+/*
 package com.yun.pattern.proxy.cglibproxy;
 
 import net.sf.cglib.proxy.Enhancer;
@@ -33,3 +34,4 @@ public class CGlibIntermediary implements MethodInterceptor {
     }
 
 }
+*/

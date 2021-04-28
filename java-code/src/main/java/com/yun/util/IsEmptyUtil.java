@@ -6,7 +6,6 @@ import java.util.Map;
 public class IsEmptyUtil {
 
 
-
     public static boolean isEmpty4String(String... strArr) {
         if (strArr == null || strArr.length == 0) {
             return false;

@@ -1,13 +1,16 @@
+/*
 package com.yun.pattern.observer.guava;
 
 import com.google.common.eventbus.EventBus;
 
+*/
 /**
  * @className: Main <br/>
  * @description: <br/>
  * @date: 2020/5/28 0:06 <br/>
  * @author: yun <br/>
- */
+ *//*
+
 public class Main {
 
     public static void main(String[] args) {
@@ -19,7 +22,8 @@ public class Main {
         eventBus.register(guavaEvent);
         eventBus.post("Tom");
 
-        /**
+        */
+/**
          * 类似于从Struts到SpringMVC的升级
          * 前者面向的是类，后者面向的是方法
          *
@@ -27,7 +31,9 @@ public class Main {
          *
          *
          * Guava ：能够轻松落地观察者模式的一种解决方案
-         */
+         *//*
+
     }
 
 }
+*/

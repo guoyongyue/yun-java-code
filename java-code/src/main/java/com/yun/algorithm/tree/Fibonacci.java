@@ -1,5 +1,6 @@
 package com.yun.algorithm.tree;
 
+import com.yun.util.PrintUtil;
 import com.yun.util.StringUtil;
 
 import java.util.ArrayList;
@@ -13,19 +14,19 @@ import java.util.Vector;
 public class Fibonacci {
     public static void main(String[] args) {
         Fibonacci fibonacci = new Fibonacci();
-        StringUtil.printlnBegin("迭代打印斐波那契数列");
-        StringUtil.printlnRet(fibonacci.fib(5));
-        StringUtil.printlnEnd("迭代打印斐波那契数列");
+        PrintUtil.printlnBegin("迭代打印斐波那契数列");
+        PrintUtil.print(fibonacci.fib(5));
+        PrintUtil.printEnd("迭代打印斐波那契数列");
 
-        StringUtil.printlnBegin("迭代打印斐波那契数列 剪枝法");
-        StringUtil.printlnRet(fibonacci.fib2(5));
-        StringUtil.printlnEnd("迭代打印斐波那契数列 剪枝法");
+        PrintUtil.printlnBegin("迭代打印斐波那契数列 剪枝法");
+        PrintUtil.print(fibonacci.fib2(5));
+        PrintUtil.printEnd("迭代打印斐波那契数列 剪枝法");
 
 
 
-        StringUtil.printlnBegin("迭代打印斐波那契数列 ⾃底向上");
-        StringUtil.printlnRet(fibonacci.fib3(5));
-        StringUtil.printlnEnd("迭代打印斐波那契数列 ⾃底向上");
+        PrintUtil.printlnBegin("迭代打印斐波那契数列 ⾃底向上");
+        PrintUtil.print(fibonacci.fib3(5));
+        PrintUtil.printEnd("迭代打印斐波那契数列 ⾃底向上");
     }
 
     private int fib(int n){
