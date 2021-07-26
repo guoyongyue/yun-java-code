@@ -2,9 +2,10 @@ package com.yun.algorithm.tree;
 
 public class TreeNode {
 	public int index;
+	public Integer val;
 	public String data;
-    public TreeNode leftChild;
-    public TreeNode rightChild;
+    public TreeNode left;
+    public TreeNode right;
 
     public int getIndex() {
         return index;
@@ -25,12 +26,19 @@ public class TreeNode {
         this.data = data;
     }
 
+	public Integer getVal() {
+		return val;
+	}
+
+	public void setVal(Integer val) {
+		this.val = val;
+	}
 
     public TreeNode(int index, String data) {
         this.index = index;
         this.data = data;
-        this.leftChild = null;
-        this.rightChild = null;
+        this.left = null;
+        this.right = null;
     }
 
 
@@ -48,11 +56,11 @@ public class TreeNode {
 		TreeNode nodeD = new TreeNode(4, "D");
 		TreeNode nodeE = new TreeNode(5, "E");
 		TreeNode nodeF = new TreeNode(6, "F");
-		root.leftChild = nodeB;
-		root.rightChild = nodeC;
-		nodeB.leftChild = nodeD;
-		nodeB.rightChild = nodeE;
-		nodeC.rightChild = nodeF;
+		root.left = nodeB;
+		root.right = nodeC;
+		nodeB.left = nodeD;
+		nodeB.right = nodeE;
+		nodeC.right = nodeF;
 		return root;
 	}
 }
