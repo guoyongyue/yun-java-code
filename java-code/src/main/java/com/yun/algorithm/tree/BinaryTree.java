@@ -43,8 +43,8 @@ public class BinaryTree {
 		if(node == null){
 			return 0;
 		}else{
-			int i = getHeight(node.leftChild);
-			int j = getHeight(node.rightChild);
+			int i = getHeight(node.left);
+			int j = getHeight(node.right);
 			return (i<j)?j+1:i+1;
 		}
 	}
@@ -59,7 +59,7 @@ public class BinaryTree {
 		if(node == null){
 			return 0;
 		}else{
-			return 1+getSize(node.leftChild)+getSize(node.rightChild);
+			return 1+getSize(node.left)+getSize(node.right);
 		}
 	}
 
@@ -74,8 +74,8 @@ public class BinaryTree {
 			return;
 		}else{
 			System.out.print(node.getData());
-			preOrder(node.leftChild);
-			preOrder(node.rightChild);
+			preOrder(node.left);
+			preOrder(node.right);
 		}
 	}
 	
@@ -94,12 +94,12 @@ public class BinaryTree {
 			TreeNode n = stack.pop();//弹出根结点
 			//压入子结点
 			System.out.print(n.getData());
-			if(n.rightChild!=null){
-				stack.push(n.rightChild);
+			if(n.right!=null){
+				stack.push(n.right);
 				
 			}
-			if(n.leftChild!=null){
-				stack.push(n.leftChild);
+			if(n.left!=null){
+				stack.push(n.left);
 			}
 		}
 	}
@@ -112,9 +112,9 @@ public class BinaryTree {
 		if(node == null){
 			return;
 		}else{
-			midOrder(node.leftChild);
+			midOrder(node.left);
 			System.out.print(node.getData());
-			midOrder(node.rightChild);
+			midOrder(node.right);
 		}
 	}
 	
@@ -127,8 +127,8 @@ public class BinaryTree {
 		if(node == null){
 			return;
 		}else{
-			postOrder(node.leftChild);
-			postOrder(node.rightChild);
+			postOrder(node.left);
+			postOrder(node.right);
 			System.out.print(node.getData());
 		}
 	}

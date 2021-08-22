@@ -40,8 +40,8 @@ public class S95不同的二叉搜索树II {
             for (TreeNode left : leftTrees) {
                 for (TreeNode right : rightTrees) {
                     TreeNode currTree = new TreeNode(i,"");
-                    currTree.leftChild = left;
-                    currTree.rightChild = right;
+                    currTree.left = left;
+                    currTree.right = right;
                     allTrees.add(currTree);
                 }
             }
