@@ -8,17 +8,12 @@ public class S53最大子序和 {
 
     }
     public int maxSubArray(int[] nums) {
-        int ans = nums[0];
-        int sum = 0;
-        for(int num: nums) {
-            if(sum > 0) {
-                sum += num;
-            } else {
-                sum = num;
-            }
-            ans = Math.max(ans, sum);
+        int pre = 0, maxAns = nums[0];
+        for (int x : nums) {
+            pre = Math.max(pre + x, x);
+            maxAns = Math.max(maxAns, pre);
         }
-        return ans;
+        return maxAns;
     }
 
 }
