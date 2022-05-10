@@ -17,4 +17,17 @@ public class S11盛最多水的容器 {
         }
         return maxarea;
     }
+    public int maxArea2(int[] height) {
+        int left=0,right=height.length-1;
+        int maxArea=0;
+        while (left<right){
+            int area = (right - left) * Math.min(height[left], height[right]);
+            maxArea=Math.max(maxArea,area);
+            if(height[left+1] > height[right-1]){
+                left++;
+            }else {
+                right--;
+            }
+        }
+    }
 }
