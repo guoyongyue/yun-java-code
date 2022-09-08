@@ -11,7 +11,7 @@ import java.util.List;
 public class S95不同的二叉搜索树II {
     public static void main(String[] args) {
         S95不同的二叉搜索树II s95不同的二叉搜索树II = new S95不同的二叉搜索树II();
-        s95不同的二叉搜索树II.generateTrees(1);
+        s95不同的二叉搜索树II.generateTrees(3);
     }
 
     public List<TreeNode> generateTrees(int n) {

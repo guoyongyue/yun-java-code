@@ -37,10 +37,17 @@ public class TreeNode {
     public TreeNode(int index, String data) {
         this.index = index;
         this.data = data;
+        this.val = index;
         this.left = null;
         this.right = null;
     }
-
+	public TreeNode(int index) {
+		this.index = index;
+		this.data = String.valueOf(index);
+		this.val = index;
+		this.left = null;
+		this.right = null;
+	}
 
 
 	/**

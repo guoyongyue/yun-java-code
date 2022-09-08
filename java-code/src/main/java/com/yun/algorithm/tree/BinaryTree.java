@@ -8,23 +8,8 @@ public class BinaryTree {
 		BinaryTree binaryTree = new BinaryTree();
 		TreeNode root = TreeNode.createBinaryTree();
 
-		/*int height = binaryTree.getHeight(root);
-		System.out.println("树的高度treeHigh:"+height);*/
-
 		int size = binaryTree.getSize(root);
 		System.out.println("结点数treeSize:"+size);
-
-		/*System.out.print("前序preOrder data:");
-		binaryTree.preOrder(root);
-
-		System.out.print("\n中序midOrder data:");
-		binaryTree.midOrder(root);
-
-		System.out.print("\n后序postOrder data:");
-		binaryTree.postOrder(root);
-
-		System.out.print("\n前序非递归preOrder data:");
-		binaryTree.nonRecOrder(root);*/
 	}
 
 	/**

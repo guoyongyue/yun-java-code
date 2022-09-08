@@ -12,7 +12,7 @@ public class S461汉明距离 {
 
 
     public int hammingDistance(int x, int y) {
-
+        return 0;
     }
 
     public String test(int value){
